@@ -1,0 +1,674 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>لوحة تحكم أكاديمية ترتيلا التعليمية</title>
+    <!-- استدعاء خط الرقعة والخطوط المعتمدة -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Aref+Ruqaa:wght@400;700&family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
+    
+    <!-- مكتبة تحويل الـ HTML إلى صورة نقية للواتساب -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+
+    <style>
+        /* الألوان الرسمية المستخرجة من الصورة WhatsApp Image 2026-06-05 at 1.54.46 PM.jpeg */
+        :root {
+            --bg-global: #F5EEF8;         /* خلفية الموقع العامة - لافندر فاتح جداً */
+            --lavender-dark: #5D3F8C;     /* اللافندر الملكي للنصوص والعناوين */
+            --lavender-mid: #8A6BB1;      /* لافندر متوسط للأزرار والإطارات */
+            --pink-blush: #F9F3FC;        /* الوردي الناعم المريح لخلفية الكروت */
+            --gold-warm: #D4AF37;         /* الذهبي الدافئ للنجوم والخطوط الزخرفية */
+            --white: #FFFFFF;
+            --text-main: #332244;
+        }
+
+        body {
+            font-family: 'Cairo', sans-serif;
+            background-color: var(--bg-global);
+            color: var(--text-main);
+            margin: 0;
+            padding: 20px;
+        }
+
+        /* أنيميشن الرموز المتحركة المستوحاة من أجواء الصورة */
+        @keyframes sparkle {
+            0% { transform: translateY(0px) scale(1); opacity: 0.8; }
+            50% { transform: translateY(-8px) scale(1.2); opacity: 1; filter: drop-shadow(0 0 5px var(--gold-warm)); }
+            100% { transform: translateY(0px) scale(1); opacity: 0.8; }
+        }
+
+        .floating-icon {
+            display: inline-block;
+            animation: sparkle 3s ease-in-out infinite;
+            color: var(--gold-warm);
+        }
+
+        header {
+            text-align: center;
+            background: var(--white);
+            padding: 20px;
+            border-radius: 20px;
+            box-shadow: 0 4px 20px rgba(93, 63, 140, 0.1);
+            margin-bottom: 25px;
+            border: 3px solid var(--lavender-mid);
+            background-image: linear-gradient(135deg, #FFFFFF 0%, #FAFFFA 100%);
+        }
+
+        .logo-text {
+            font-family: 'Aref Ruqaa', serif;
+            font-size: 38px;
+            color: var(--lavender-dark);
+            font-weight: bold;
+            margin: 0;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+        }
+
+        .main-container {
+            display: grid;
+            grid-template-columns: 1.1fr 0.9fr;
+            gap: 25px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        @media (max-width: 1000px) {
+            .main-container { grid-template-columns: 1fr; }
+        }
+
+        .panel-section {
+            background: var(--white);
+            padding: 25px;
+            border-radius: 20px;
+            box-shadow: 0 4px 20px rgba(93, 63, 140, 0.05);
+            border: 2px solid var(--lavender-mid);
+        }
+
+        h3 {
+            color: var(--lavender-dark);
+            border-bottom: 2px dashed var(--lavender-mid);
+            padding-bottom: 8px;
+            margin-top: 0;
+            font-size: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .full-width { grid-column: span 2; }
+
+        label { font-weight: 600; color: var(--lavender-dark); font-size: 14px; }
+        
+        input, select, textarea {
+            padding: 11px;
+            border-radius: 10px;
+            border: 2px solid #E2D7EE;
+            font-family: 'Cairo', sans-serif;
+            font-size: 14px;
+            outline: none;
+            background: #FDFBFF;
+            color: var(--text-main);
+        }
+
+        input:focus, select:focus, textarea:focus {
+            border-color: var(--lavender-dark);
+            background: #FFF;
+            box-shadow: 0 0 5px rgba(138, 107, 177, 0.2);
+        }
+
+        .inline-action {
+            display: flex;
+            gap: 8px;
+        }
+
+        .btn {
+            padding: 11px 18px;
+            border-radius: 10px;
+            background-color: var(--lavender-mid);
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-weight: bold;
+            font-family: 'Cairo', sans-serif;
+            transition: 0.3s;
+        }
+
+        .btn:hover { background-color: var(--lavender-dark); transform: translateY(-2px); }
+        .btn-success { background-color: #6C4EA1; color: #FFFFFF; border: 2px solid var(--gold-warm); }
+        .btn-success:hover { background-color: var(--lavender-dark); }
+        .btn-secondary { background-color: #A380C9; color: #fff; }
+
+        /* الكروت الجاهزة للطباعة - مطابقة تماماً لهوية الصورة المسندة */
+        .preview-box-wrapper {
+            position: sticky;
+            top: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .report-card-print-area {
+            background-color: var(--pink-blush) !important;
+            border: 4px solid var(--lavender-dark);
+            padding: 30px;
+            border-radius: 20px;
+            position: relative;
+            box-shadow: 0 4px 25px rgba(93, 63, 140, 0.1);
+            background-image: radial-gradient(circle at top right, #FDF9FF 0%, var(--pink-blush) 100%) !important;
+        }
+
+        /* شريط ذهبي جمالي مستوحى من إطار الشهادة */
+        .report-card-print-area::before {
+            content: '';
+            position: absolute;
+            top: 6px; left: 6px; right: 6px; bottom: 6px;
+            border: 1px solid var(--gold-warm);
+            border-radius: 14px;
+            pointer-events: none;
+        }
+
+        .report-card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 2px dashed var(--gold-warm);
+            padding-bottom: 12px;
+            margin-bottom: 20px;
+        }
+
+        .card-title-main {
+            font-family: 'Aref Ruqaa', serif;
+            font-size: 30px;
+            color: var(--lavender-dark);
+        }
+
+        .meta-info-row {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            background: #EFE4F7;
+            padding: 10px;
+            border-radius: 10px;
+            font-weight: bold;
+            text-align: center;
+            margin-bottom: 18px;
+            font-size: 13px;
+            color: var(--lavender-dark);
+            border: 1px solid #DCCAEB;
+        }
+
+        .academic-row {
+            background-color: var(--white) !important;
+            border-right: 6px solid var(--lavender-mid);
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 12px;
+            box-shadow: 0 2px 8px rgba(93,63,140,0.02);
+        }
+
+        .academic-row h4 { margin: 0 0 6px 0; color: var(--lavender-dark); font-size: 15px; display: flex; align-items: center; gap: 6px; }
+        .academic-row p { margin: 0; font-size: 14px; color: #443355; line-height: 1.5; }
+
+        /* تمييز خانات التقدير بلون ذهبي دافئ وجميل من الصورة */
+        .gold-eval-text {
+            font-weight: bold; 
+            color: #9A7B1C; 
+            font-size: 13px; 
+            margin-top: 6px;
+            display: inline-block;
+            background: #FFFDF0;
+            padding: 2px 8px;
+            border-radius: 5px;
+            border: 1px solid #F3EAA1;
+        }
+
+        .report-card-dua {
+            text-align: center;
+            font-family: 'Cairo', sans-serif;
+            font-size: 14px;
+            color: var(--white);
+            background-color: var(--lavender-dark) !important;
+            padding: 12px;
+            border-radius: 15px;
+            font-weight: bold;
+            margin-top: 15px;
+            border: 1px solid var(--gold-warm);
+            box-shadow: 0 3px 10px rgba(93, 63, 140, 0.2);
+        }
+
+        .tabs-header {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 5px;
+        }
+
+        .tab-trigger {
+            flex: 1;
+            padding: 12px;
+            background: #E2D7EE;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: bold;
+            font-family: 'Cairo', sans-serif;
+            color: var(--lavender-dark);
+            transition: 0.3s;
+        }
+
+        .tab-trigger.active {
+            background: var(--lavender-dark);
+            color: white;
+            box-shadow: 0 4px 10px rgba(93, 63, 140, 0.15);
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="logo-text">✨ أكاديمية ترتيلا التعليمية ✨</div>
+        <p style="color: var(--lavender-dark); margin: 5px 0 0 0; font-weight: 600;">نظام الإدارة المركزي الموحد ومستخرج التقارير الفورية</p>
+    </header>
+
+    <div class="main-container">
+        
+        <!-- القسم الأيمن: لوحة إدخال البيانات -->
+        <section class="panel-section">
+            <h3><span>🔮</span> تسجيل بيانات المجلس اليومي</h3>
+            
+            <div class="form-grid">
+                <!-- خانة اختيار الطالب المحدثة -->
+                <div class="form-group">
+                    <label>اسم الطالب الغالي:</label>
+                    <select id="studentSelect" onchange="updatePreview()">
+                        <option value="محمد ماجد">محمد ماجد</option>
+                        <option value="محمد على">محمد على</option>
+                        <option value="يارا">يارا</option>
+                        <option value="ادم">ادم</option>
+                        <option value="فريده أحمد">فريده أحمد</option>
+                        <option value="فريده محمد">فريده محمد</option>
+                        <option value="عمر">عمر</option>
+                        <option value="لين">لين</option>
+                        <option value="رقيه">رقيه</option>
+                        <option value="منصور">منصور</option>
+                        <option value="مؤيد">مؤيد</option>
+                        <option value="جومانا">جومانا</option>
+                        <option value="جيدا">جيدا</option>
+                        <option value="أروى">أروى</option>
+                        <option value="أسمى">أسمى</option>
+                        <option value="يوسف">يوسف</option>
+                        <option value="مريم">مريم</option>
+                        <option value="زياد">زياد</option>
+                        <option value="ريان">ريان</option>
+                        <option value="مالك">مالك</option>
+                        <option value="حمزه">حمزه</option>
+                        <option value="حلا ماجد">حلا ماجد</option>
+                    </select>
+                </div>
+
+                <!-- زر إضافة طفل جديد -->
+                <div class="form-group">
+                    <label>إضافة طفل جديد للأكاديمية:</label>
+                    <div class="inline-action">
+                        <input type="text" id="newStudentInput" placeholder="اسم الطفل ثلاثي">
+                        <button class="btn btn-secondary" onclick="addNewStudent()">➕</button>
+                    </div>
+                </div>
+
+                <!-- خانة اختيار المعلمة -->
+                <div class="form-group">
+                    <label>معلمة الحلقة الفخورة بكِ:</label>
+                    <select id="teacherSelect" onchange="updatePreview()">
+                        <option value="أ. بسنت أحمد">أ. بسنت أحمد</option>
+                        <option value="أ. عائشة محمود">أ. عائشة محمود</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>إضافة معلمة جديدة:</label>
+                    <div class="inline-action">
+                        <input type="text" id="newTeacherInput" placeholder="اسم المعلمة">
+                        <button class="btn btn-secondary" onclick="addNewTeacher()">➕</button>
+                    </div>
+                </div>
+
+                <!-- معلومات المجلس والتاريخ -->
+                <div class="form-group">
+                    <label>التاريخ واليوم:</label>
+                    <input type="text" id="dateDayInput" value="الجمعة 5 يونيو 2026" oninput="updatePreview()">
+                </div>
+
+                <div class="form-group">
+                    <label>رقم المجلس (من 1 إلى 8):</label>
+                    <input type="number" id="sessionNumberInput" value="1" min="1" max="8" oninput="updatePreview()">
+                </div>
+
+                <div class="full-width" style="border-bottom: 2px dashed var(--lavender-mid); margin: 10px 0;"></div>
+
+                <!-- خانات المحفوظ الجديد -->
+                <div class="form-group">
+                    <label>سورة الحفظ الجديد:</label>
+                    <select id="newSurahSelect" onchange="updatePreview()"></select>
+                </div>
+                <div class="form-group">
+                    <label>عدد الآيات المقررة:</label>
+                    <input type="text" id="newVersesInput" value="من آية ١ إلى ١٥" oninput="updatePreview()">
+                </div>
+                <div class="form-group full-width">
+                    <label>تقدير المحفوظ الجديد في المجلس:</label>
+                    <select id="newSurahEval" onchange="updatePreview()">
+                        <option value="ممتاز مع مرتبة الشرف ⭐⭐⭐⭐⭐">ممتاز مع مرتبة الشرف ⭐⭐⭐⭐⭐</option>
+                        <option value="ممتاز متقن وثابت وثقيل 🌟">ممتاز متقن وثابت وثقيل 🌟</option>
+                        <option value="جيد جداً مرتفع ويتحسن ✨">جيد جداً مرتفع ويتحسن ✨</option>
+                        <option value="جيد يحتاج مراجعة وتكرار بالمنزل 📋">جيد يحتاج مراجعة وتكرار بالمنزل 📋</option>
+                    </select>
+                </div>
+
+                <!-- ورد المراجعة والتقدير -->
+                <div class="form-group">
+                    <label>ورد المراجعة والتثبيت:</label>
+                    <input type="text" id="reviewSurahInput" value="سورة المجادلة" oninput="updatePreview()">
+                </div>
+                <div class="form-group">
+                    <label>تقدير ورد المراجعة الكلي:</label>
+                    <select id="reviewEval" onchange="updatePreview()">
+                        <option value="جيد جداً المراجعة ثابتة ومفرحة ✨">جيد جداً المراجعة ثابتة ومفرحة ✨</option>
+                        <option value="ممتاز متقن ومستقر تماماً 💎">ممتاز متقن ومستقر تماماً 💎</option>
+                        <option value="يحتاج مراجعة إضافية مع الوالدة الغالية 💗">يحتاج مراجعة إضافية مع الوالدة الغالية 💗</option>
+                    </select>
+                </div>
+
+                <!-- آداب الطفل والمواد الإثرائية -->
+                <div class="form-group full-width">
+                    <label>تقدير آداب الطفل الأخلاقية في مجلسنا الجميل:</label>
+                    <select id="behaviorEval" onchange="updatePreview()">
+                        <option value="ملاك مجلسنا الملتزم والمؤدب للغاية 🌸">ملاك مجلسنا الملتزم والمؤدب للغاية 🌸</option>
+                        <option value="تفاعل رائع وخلق رفيع يقتدى به 💎">تفاعل رائع وخلق رفيع يقتدى به 💎</option>
+                        <option value="جميل وهادئ ونطمح لمزيد من التركيز والهمة 🚀">جميل وهادئ ونطمح لمزيد من التركيز والهمة 🚀</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>ما تم إنجازه في (الآداب/القصص/السيرة/الحديث):</label>
+                    <input type="text" id="extraTopicInput" value="الآداب الإسلامية وحب الوالدين" oninput="updatePreview()">
+                </div>
+                <div class="form-group">
+                    <label>الواجب المنزلي الموصى به للمجلس القادم:</label>
+                    <input type="text" id="homeworkInput" value="تكرار ورد الحفظ والالتزام بالأذكار" oninput="updatePreview()">
+                </div>
+
+                <!-- ملاحظة ودعاء -->
+                <div class="form-group full-width">
+                    <label>ملاحظة خاصة لولية الأمر الشريكة في النجاح:</label>
+                    <textarea id="motherNoteInput" rows="2" oninput="updatePreview()">لقد أظهرت حرصاً واجتهاداً رائعاً في حفظ كتاب الله تعالى ومراجعته فاستحقت كل التقدير والدعم.</textarea>
+                </div>
+
+                <div class="form-group full-width">
+                    <label>اختر دعاءً قلبياً مخصصاً للطالب:</label>
+                    <select id="duaSelect" onchange="updatePreview()">
+                        <option value="نسأل الله أن يبارك لكِ فيما حفظتِ، وأن يجعل القرآن الكريم نور قلبكِ، ويوفقكِ لما يحب ويرضى">نسأل الله أن يبارك لكِ فيما حفظتِ، وأن يجعل القرآن الكريم نور قلبكِ، ويوفقكِ لما يحب ويرضى</option>
+                        <option value="أنبته الله نباتاً حسناً وجعله من حملة كتابه العزيز وقرة عين لوالديه في الدارين">أنبته الله نباتاً حسناً وجعله من حملة كتابه العزيز وقرة عين لوالديه في الدارين</option>
+                        <option value="فتح الله عليه فتوح العارفين وجعل القرآن الكريم ربيع صدره ونور طريقه وجعله شفيعاً لكم">فتح الله عليه فتوح العارفين وجعل القرآن الكريم ربيع صدره ونور طريقه وجعله شفيعاً لكم</option>
+                    </select>
+                </div>
+            </div>
+
+            <div style="margin-top: 20px; text-align: center;">
+                <button class="btn btn-success" style="width: 100%; font-size: 16px;" onclick="sendDataToGoogleSheet()">💾 ترحيل البيانات فوراً لجوجل شيت الحصر الشامل</button>
+            </div>
+        </section>
+
+        <!-- القسم الأيسر: شاشة المعرض الحية والطباعة بالألوان المحدثة الملكية -->
+        <div class="preview-box-wrapper">
+            <div class="tabs-header">
+                <button class="tab-trigger active" id="dayTabBtn" onclick="switchReportTab('day')">🌸 كارت التقرير اليومي</button>
+                <button class="tab-trigger" id="monthTabBtn" onclick="switchReportTab('month')">👑 كارت الحصاد الشهري الشامل</button>
+            </div>
+
+            <!-- كارت التقرير اليومي الفوري المدعم بالهوية البصرية الجديدة -->
+            <div id="dayReportView">
+                <div class="report-card-print-area" id="dailyPrintTarget">
+                    <div class="report-card-header">
+                        <span class="card-title-main">أكاديمية ترتيلا <span class="floating-icon">✨</span></span>
+                        <span style="font-family:'Aref Ruqaa'; font-size:18px; color: var(--lavender-dark);" id="lblTeacherName">معلمتكِ المحبة: أ. بسنت أحمد</span>
+                    </div>
+                    
+                    <div class="meta-info-row">
+                        <span id="lblStudentName">الطالبة: يارا هاني</span>
+                        <span id="lblDateDay">التاريخ: الجمعة 5 يونيو 2026</span>
+                        <span id="lblSessionNum">رقم المجلس: 1</span>
+                    </div>
+
+                    <div class="academic-row">
+                        <h4><span>📖</span> المحفوظ اليومي الجديد للقرآن الكريم:</h4>
+                        <p id="lblNewSurah">سورة البقرة - عدد الآيات: من آية ١ إلى ١٥</p>
+                        <span class="gold-eval-text" id="lblNewEval">التقدير: ممتاز متقن وثابت وثقيل 🌟</span>
+                    </div>
+
+                    <div class="academic-row">
+                        <h4><span>🔄</span> ورد مراجعة الماضي وتثبيت الحفظ القديم:</h4>
+                        <p id="lblReviewSurah">سورة المجادلة</p>
+                        <span class="gold-eval-text" id="lblReviewEval">التقدير: جيد جداً المراجعة ثابتة ومفرحة ✨</span>
+                    </div>
+
+                    <div class="academic-row">
+                        <h4><span>🌱</span> الأثر التربوي (الآداب / السيرة النبوية / الحديث):</h4>
+                        <p id="lblExtraTopic">الآداب الإسلامية وحب الوالدين</p>
+                        <p style="font-weight: bold; color: var(--lavender-dark); font-size:13px; margin-top:6px;" id="lblBehaviorEval">السلوك والمشاركة: ملاك مجلسنا الملتزم والمؤدب للغاية 🌸</p>
+                    </div>
+
+                    <div class="academic-row" style="background-color: #FFFDF7 !important; border-right-color: var(--gold-warm);">
+                        <h4><span>📝</span> الواجب المنزلي الموصى بمتابعته وتكراره:</h4>
+                        <p id="lblHomework">تكرار ورد الحفظ والالتزام بالأذكار</p>
+                    </div>
+
+                    <div class="academic-row" style="background-color: #F8F5FC !important; border-right-color: var(--lavender-dark);">
+                        <h4><span>💌</span> رسالة المعلمة الموجهة لولية الأمر الغالية:</h4>
+                        <p id="lblMotherNote">لقد أظهرت حرصاً واجتهاداً رائعاً في حفظ كتاب الله تعالى ومراجعته فاستحقت كل التقدير والدعم.</p>
+                    </div>
+
+                    <div class="report-card-dua" id="lblDua">
+                        نسأل الله أن يبارك لكِ فيما حفظتِ، وأن يجعل القرآن الكريم نور قلبكِ، ويوفقكِ لما يحب ويرضى
+                    </div>
+                </div>
+                <button class="btn" style="width:100%; margin-top:15px; background-color: var(--lavender-mid);" onclick="printCardImage('dailyPrintTarget', 'التقرير_اليومي')">📸 تصدير كارت التقرير اليومي كصورة عالية الجودة للواتساب</button>
+            </div>
+
+            <!-- كارت التقرير الشهري التراكمي الشامل المحسوب هندسياً -->
+            <div id="monthReportView" style="display: none;">
+                <div class="report-card-print-area" id="monthPrintTarget">
+                    <div class="report-card-header">
+                        <span class="card-title-main" style="color: var(--lavender-dark);">حصاد أكاديمية ترتيلا الشامل 📊</span>
+                        <span style="font-family:'Aref Ruqaa'; font-size:16px; color: var(--gold-warm); font-weight: bold;">سجل الحصر الشهري والتقييم</span>
+                    </div>
+
+                    <div class="meta-info-row">
+                        <span id="mOfStudent">الطالبة: يارا هاني</span>
+                        <span>إجمالي الحضور: 8 مجالس</span>
+                        <span>عدد أيام الغياب: 0 أيام</span>
+                    </div>
+
+                    <div class="academic-row">
+                        <h4><span>👑</span> بيان المحفوظ الجديد المنجز خلال الـ 8 مجالس:</h4>
+                        <p id="mOfNew">أتم الطالب بنجاح حفظ وتثبيت السور المقررة بمعدل التزام كامل، وأظهر تميزاً لافتاً في حفظ الكلمات وتثبيت أواخر الآيات بتقدير عام ممتاز ومتقن.</p>
+                    </div>
+
+                    <div class="academic-row">
+                        <h4><span>🔄</span> بيان مراجعة الماضي والتطور المستمر في التجويد والقراءة:</h4>
+                        <p id="mOfReview">تقدّم ملحوظ جداً في تلاوة أحكام التجويد وتثبيت مخارج الحروف، ومراجعة الأجزاء القديمة المحددة بثبات وثقة عالية تفرح القلب.</p>
+                    </div>
+
+                    <div class="academic-row">
+                        <h4><span>📚</span> بيان التحصيل في الآداب وقصص السيرة والأحاديث الشريفة:</h4>
+                        <p id="mOfExtra">تفاعل بوعي وفهم عميق ينم عن ذوق رفيع مع الدروس والآداب الإسلامية المطروحة في مجالسنا الطيبة الفائتة.function sendDataToSheet</p>
+                    </div>
+
+                    <div class="academic-row" style="background-color: #FDF9FF !important; border-right-color: var(--gold-warm);">
+                        <h4><span>🏆</span> التقدير الأخلاقي العام والسلوك داخل الحلقات والمجالس:</h4>
+                        <p id="mOfBehavior" style="font-weight:bold; color: var(--lavender-dark);">ملاك مجلسنا الملتزم والمؤدب للغاية 🌸</p>
+                    </div>
+
+                    <div class="academic-row" style="background-color: #FAF6FF !important; border-right-color: var(--lavender-mid);">
+                        <h4><span>🤝</span> كلمة الإدارة الشاكرة لولي الأمر الشريك في الغرس:</h4>
+                        <p>نشكركم من القلب على المتابعة والحرص والتعاون المثمر المستمر مع الأكاديمية لتثبيت هذه النبتة الصالحة في طريق نور القرآن الكريم.</p>
+                    </div>
+
+                    <div class="report-card-dua" id="mOfDua">
+                        دعاء الختام المخصص للطالب...
+                    </div>
+                </div>
+                <button class="btn btn-success" style="width:100%; margin-top:15px;" onclick="printCardImage('monthPrintTarget', 'التقرير_الشهري_الشامل')">📸 تصدير كارت الحصاد الشهري الإجمالي كصورة نقية للواتساب</button>
+            </div>
+
+        </div>
+
+    </div>
+
+    <script>
+        // مصفوفة سور القرآن الكريم بالكامل لملء الخانة تلقائياً
+        const quranSurahs = [
+            "الفاتحة","البقرة","آل عمران","النساء","المائدة","الأنعام","الأعراف","الأنفال","التوبة","يونس","هود",
+            "يوسف","الرعد","إبراهيم","الحجر","النحل","الإسراء","الكهف","مريم","طه","الأنبياء","الحج","المؤمنون",
+            "النور","الفرقان","الشعراء","النمل","القصص","العنكبوت","الروم","لقمان","السجدة","الأحزاب","سبأ",
+            "فاطر","يس","الصافات","ص","الزمر","غافر","فصلت","الشورى","الزخرف","الدخان","الجاثية","الأحقاف",
+            "محمد","الفتح","الحجرات","ق","الذاريات","الطور","النجم","القمر","الرحمن","الواقعة","الحديد","المجادلة",
+            "الحشر","الممتحنة","الصف","الجمعة","المنافقون","التغابن","الطلاق","التحريم","الملك","القلم","الحاقة",
+            "المعارج","نوح","الجن","المزمل","المدثر","القيامة","الإنسان","المرسلات","النبأ","النازعات","عبس",
+            "التكوير","الانفطار","المطففين","الانشقاق","البروج","الطارق","الأعلى","الغاشية","الفجر","البلد",
+            "الشمس","الليل","الضحى","الشرح","التين","العلق","القدر","البينة","الزلزلة","العاديات","القارعة",
+            "التكاثر","العصر","الهمزة","الفيل","قريش","الماعون","الكوثر","الكافرون","النصر","المسد","الإخلاص",
+            "الفلق","الناس"
+        ];
+
+        // مصفوفة أسماء الإناث المعتمدة للفصل التلقائي الذكي في صيغة الدعاء
+        const girlsNames = ["يارا", "فريده أحمد", "فريده محمد", "لين", "رقيه", "جومانا", "جيدا", "أروى", "أسمى", "مريم", "حلا ماجد", "خديجه", "بسمله", "نوران"];
+
+        function populateSurahs() {
+            const select = document.getElementById('newSurahSelect');
+            quranSurahs.forEach(s => {
+                const opt = document.createElement('option'); opt.value = `سورة ${s}`; opt.innerText = `سورة ${s}`; select.appendChild(opt);
+            });
+            select.value = "سورة المجادلة"; // قيمة افتراضية متوافقة مع الصورة المعروضة
+        }
+
+        function addNewStudent() {
+            const input = document.getElementById('newStudentInput');
+            const name = input.value.trim();
+            if(!name) return;
+            const select = document.getElementById('studentSelect');
+            const opt = document.createElement('option'); opt.value = name; opt.innerText = name; opt.selected = true;
+            select.appendChild(opt);
+            input.value = '';
+            updatePreview();
+        }
+
+        function addNewTeacher() {
+            const input = document.getElementById('newTeacherInput');
+            const name = input.value.trim();
+            if(!name) return;
+            const select = document.getElementById('teacherSelect');
+            const opt = document.createElement('option'); opt.value = name; opt.innerText = name; opt.selected = true;
+            select.appendChild(opt);
+            input.value = '';
+            updatePreview();
+        }
+
+        function switchReportTab(tab) {
+            document.getElementById('dayReportView').style.display = tab === 'day' ? 'block' : 'none';
+            document.getElementById('monthReportView').style.display = tab === 'month' ? 'block' : 'none';
+            document.getElementById('dayTabBtn').classList.toggle('active', tab === 'day');
+            document.getElementById('monthTabBtn').classList.toggle('active', tab === 'month');
+            updatePreview();
+        }
+
+        function updatePreview() {
+            const student = document.getElementById('studentSelect').value;
+            const teacher = document.getElementById('teacherSelect').value;
+            const dateDay = document.getElementById('dateDayInput').value;
+            const sessionNum = document.getElementById('sessionNumberInput').value;
+            const newSurah = document.getElementById('newSurahSelect').value;
+            const newVerses = document.getElementById('newVersesInput').value;
+            const newEval = document.getElementById('newSurahEval').value;
+            const reviewSurah = document.getElementById('reviewSurahInput').value || "مراجعة السور السابقة";
+            const reviewEval = document.getElementById('reviewEval').value;
+            const behavior = document.getElementById('behaviorEval').value;
+            const extra = document.getElementById('extraTopicInput').value || "الآداب الإسلامية والسيرة الطيبة";
+            const homework = document.getElementById('homeworkInput').value || "تثبيت ومراجعة محفوظ اليوم بالمنزل";
+            const motherNote = document.getElementById('motherNoteInput').value || "نشكركم على حسن المتابعة المتميزة والاهتمام الرائع بالطفل.";
+            const dua = document.getElementById('duaSelect').value;
+
+            // تحديد جنس الطالب تلقائياً لتعديل صيغ الخطاب والدعاء بما يطابق الصورة المستندة
+            const isGirl = girlsNames.some(gName => student.includes(gName));
+            const suffix = isGirl ? "الطالبة" : "الطالب";
+
+            // تحديث بيانات كارت التقرير اليومي الفوري الفاخر
+            document.getElementById('lblStudentName').innerText = `${suffix}: ${student}`;
+            document.getElementById('lblTeacherName').innerText = `تحت إشراف المعلمة: ${teacher}`;
+            document.getElementById('lblDateDay').innerText = `التاريخ: ${dateDay}`;
+            document.getElementById('lblSessionNum').innerText = `رقم المجلس: ${sessionNum}`;
+            document.getElementById('lblNewSurah').innerText = `${newSurah} (${newVerses})`;
+            document.getElementById('lblNewEval').innerText = `التقدير: ${newEval}`;
+            document.getElementById('lblReviewSurah').innerText = reviewSurah;
+            document.getElementById('lblReviewEval').innerText = `التقدير: ${reviewEval}`;
+            document.getElementById('lblExtraTopic').innerText = extra;
+            document.getElementById('lblBehaviorEval').innerText = `السلوك والمشاركة: ${behavior}`;
+            document.getElementById('lblHomework').innerText = homework;
+            document.getElementById('lblMotherNote').innerText = motherNote;
+            document.getElementById('lblDua').innerText = `✨ ${dua} ✨`;
+
+            // تحديث بيانات كارت الحصر والتحصيل الشهري التراكمي الشامل (8 مجالس)
+            document.getElementById('mOfStudent').innerText = `${suffix}: ${student}`;
+            document.getElementById('mOfNew').innerText = `خلال الثمانية مجالس المكتملة المنقضية، أتمَّت ${suffix} بنجاح إتقان مخرجات الحفظ الجديد لـ (${newSurah}) والأجزاء المحددة بمعدل التزام كامل، وأظهرت تميزاً لافتاً وثباتاً رفيعاً في ضبط التقديرات بمعدل عام عالي وهو (${newEval}).`;
+            document.getElementById('mOfReview').innerText = `في مسار مراجعة الحفظ القديم وتمكين التقدم في القراءة بالتجويد والمخارج، تم إنجاز مراجعة وتثبيت: (${reviewSurah}) بثبات تام وثقة واضحة تفرح القلب بفضل التكرار المستمر.`;
+            document.getElementById('mOfExtra').innerText = `أبدت تفاعلاً متميزاً ووعياً جميلاً بجميع القيم والآداب المطروحة في مجالسنا المباركة، لاسيما في موضوع: (${extra}).`;
+            document.getElementById('mOfBehavior').innerText = behavior;
+
+            // ضبط دعاء الختام في كارت الحصر الشهري بناءً على نوع النبتة الصالحة (ولد أو بنت)
+            if (isGirl) {
+                document.getElementById('mOfDua').innerText = "🌸 بارك الله في نبتتكم الصالحة الغالية وجعلها من حملة كتابه العزيز، وقرة عين لكما وجعلها شفيعةً لكم يوم القيامة 🌸";
+            } else {
+                document.getElementById('mOfDua').innerText = "🌸 بارك الله في نبتتكم الصالحة الغالي وجعله من حملة كتابه العزيز، وقرة عين لكما وجعله شفيعاً لكم يوم القيامة 🌸";
+            }
+        }
+
+        function printCardImage(divId, fileName) {
+            const element = document.getElementById(divId);
+            html2canvas(element, {
+                scale: 3, // تصدير فائق الدقة نقية جداً مخصصة للمشاركة على الواتساب دون بكسلة
+                backgroundColor: "#F9F3FC", // تعيين لون الخلفية بوضوح لمنع ظهور كروت سوداء في الهواتف ذات الوضع الداكن
+                logging: false,
+                useCORS: true
+            }).then(canvas => {
+                const link = document.createElement('a');
+                link.download = `${fileName}_أكاديمية_ترتيلا.png`;
+                link.href = canvas.toDataURL('image/png');
+                link.click();
+            }).catch(err => console.error(err));
+        }
+// مثال لإرسال بيانات الطالب من موقعك
+const scriptUrl = "https://script.google.com/macros/s/AKfycbwDJUsFv_xu5lcwFWvHvGjh_FihijE_PyX2hcByScBpv4Sm1on9iInIItzkPI15bDQH/exec"; // ضعي الرابط الذي نسخته هنا
+
+function sendDataToSheet(studentData) {
+  fetch(scriptUrl, {
+    method: "POST",
+    mode: "no-cors", // للتعامل مع قيود الـ CORS
+    cache: "no-cache",
+    body: JSON.stringify(studentData)
+  }).then(() => {
+    alert("تم حفظ بيانات الطالب بنجاح!");
+  });
+}    </script>
+</body>
+</html>
